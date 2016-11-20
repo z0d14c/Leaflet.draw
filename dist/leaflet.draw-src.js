@@ -1,5 +1,5 @@
 /*
- Leaflet.draw 0.4.3+2be3fd8, a plugin that adds drawing and editing tools to Leaflet powered maps.
+ Leaflet.draw 0.4.3+d1f0b08, a plugin that adds drawing and editing tools to Leaflet powered maps.
  (c) 2012-2017, Jacob Toye, Jon West, Smartrak, Leaflet
 
  https://github.com/Leaflet/Leaflet.draw
@@ -8,7 +8,7 @@
 (function (window, document, undefined) {/**
  * Leaflet.draw assumes that you have already included the Leaflet library.
  */
-L.drawVersion = "0.4.3+2be3fd8";
+L.drawVersion = "0.4.3+d1f0b08";
 /**
  * @class L.Draw
  * @aka Draw
@@ -3906,10 +3906,13 @@ L.EditToolbar.Edit = L.Handler.extend({
 	save: function () {
 		var editedLayers = new L.LayerGroup();
 		this._featureGroup.eachLayer(function (layer) {
-			if (layer.edited) {
-				editedLayers.addLayer(layer);
-				layer.edited = false;
-			}
+			// if conditional commented out fix so that mobile editing works
+			// TODO: fix more robustly so that layer.edited is toggled appropriately
+			// on mobile
+			// if (layer.edited) {
+			editedLayers.addLayer(layer);
+			layer.edited = false;
+			// }
 		});
 		this._map.fire(L.Draw.Event.EDITED, {layers: editedLayers});
 	},
