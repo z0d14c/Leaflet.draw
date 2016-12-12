@@ -123,10 +123,10 @@ L.EditToolbar.Edit = L.Handler.extend({
 	save: function () {
 		var editedLayers = new L.LayerGroup();
 		this._featureGroup.eachLayer(function (layer) {
-			if (layer.edited) {
+			// if (layer.edited) {
 				editedLayers.addLayer(layer);
 				layer.edited = false;
-			}
+			// }
 		});
 		this._map.fire(L.Draw.Event.EDITED, { layers: editedLayers });
 	},

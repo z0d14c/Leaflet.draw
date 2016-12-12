@@ -291,6 +291,7 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 			if (Math.abs(distance) < 9 * (window.devicePixelRatio || 1)) {
 				this.addVertex(e.latlng);
 			}
+			this._clickHandled = true;
 		}
 		this._mouseDownOrigin = null;
 	},
@@ -299,12 +300,13 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 		var originalEvent = e.originalEvent;
 		var clientX;
 		var clientY;
-		if (originalEvent.touches && originalEvent.touches[0]) {
+		if (originalEvent.touches && originalEvent.touches[0] && !this._clickHandled) {
 			clientX = originalEvent.touches[0].clientX;
 			clientY = originalEvent.touches[0].clientY;
 			this._startPoint.call(this, clientX, clientY);
 			this._endPoint.call(this, clientX, clientY, e);
 		}
+		this._clickHandled = null;
 	},
 
 	_onMouseOut: function () {
