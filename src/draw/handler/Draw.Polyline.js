@@ -297,6 +297,7 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 	},
 
 	_onTouch: function (e) {
+		console.log('testing touch message');
 		var originalEvent = e.originalEvent;
 		var clientX;
 		var clientY;
