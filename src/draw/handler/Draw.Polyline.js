@@ -274,15 +274,21 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 		this._startPoint.call(this, clientX, clientY);
 
 	},
+
+	// sets a mousedown origin point
 	_startPoint: function (clientX, clientY) {
 		this._mouseDownOrigin = L.point(clientX, clientY);
 	},
 
 	_onMouseUp: function (e) {
-		var originalEvent = e.originalEvent;
-		var clientX = originalEvent.clientX;
-		var clientY = originalEvent.clientY;
-		this._endPoint.call(this, clientX, clientY, e);
+		if (this._mouseDownOrigin) {
+			var originalEvent = e.originalEvent;
+			var clientX = originalEvent.clientX;
+			var clientY = originalEvent.clientY;
+			this._endPoint.call(this, clientX, clientY, e);
+			this._clickHandled = true;
+		}
+		this._mouseDownOrigin = null;
 	},
 	_endPoint: function (clientX, clientY, e) {
 		if (this._mouseDownOrigin) {
@@ -291,13 +297,11 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 			if (Math.abs(distance) < 9 * (window.devicePixelRatio || 1)) {
 				this.addVertex(e.latlng);
 			}
-			this._clickHandled = true;
 		}
 		this._mouseDownOrigin = null;
 	},
 
 	_onTouch: function (e) {
-		console.log('testing touch message');
 		var originalEvent = e.originalEvent;
 		var clientX;
 		var clientY;
