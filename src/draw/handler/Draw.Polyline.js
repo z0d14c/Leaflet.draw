@@ -296,6 +296,7 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 		if (this._mouseDownOrigin) {
 			var dragCheckDistance = L.point(clientX, clientY)
 				.distanceTo(this._mouseDownOrigin);
+			this._mouseMarker.setLatLng(e.latlng);
 			var lastPtDistance = this._calculateFinishDistance(e.latlng);
 			if (lastPtDistance < 10 && L.Browser.touch) {
 				this._finishShape();
@@ -336,7 +337,7 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 	// this is semi-ugly code but the only reliable way i found to get the job done
 	// note: calculating point.distanceTo between mouseDownOrigin and last marker did NOT work
 	_calculateFinishDistance: function (potentialLatLng) {
-		var lastPtDistance
+		var lastPtDistance;
 		if (this._markers.length > 0) {
 				var finishMarker;
 				if (this.type === L.Draw.Polyline.TYPE) {
